@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
         <div class="col text-left">
             <div class="wrapper">
@@ -8,11 +8,11 @@
                 <div id="content">
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3>Add Gift card</h3>
+                            <h3>Add Paypal Account</h3>
                         </div>
                         <div class="card-body text-left">
                             <form @submit="formSubmit">
-                                <GiftCardForm :giftCard="giftCardInfo" :violations="anerror.violations" />
+                                <PaypalForm :paypalAcc="paypalAccount" :violations="anerror.violations" />
                                 <div v-if="loading" class="py-2">Sending....</div>
                             </form>
                             <div class="alert alert-danger text-left my-2" v-if="anerror.isError">
@@ -31,13 +31,13 @@
 </template>
 <script>
 import axios from "axios";
-import AdminSideBar from "@/components/AdminSideBar.vue";
-import GiftCardForm from "@/components/GiftCardForm.vue";
+import AdminSideBar from "@/components/payment/admin/AdminSideBar.vue";
+import PaypalForm from "@/components/payment/admin/PaypalForm.vue";
 export default {
-    name: "AddGiftCard",
+    name: "AddPaypal",
     components: {
         AdminSideBar,
-        GiftCardForm
+        PaypalForm
     },
     beforeMount(){
         Object.assign(this.anerror, this.initialErrors);
@@ -50,21 +50,15 @@ export default {
                 title: "",
                 detail: "",
                 violations:{
-                    title: null,
-                    titleViolations: [],
-                    code: null,
-                    codeViolations: []
+                    email: null,
+                    emailViolations: []
                 }
             },
             anerror: {},
-            giftCardInfo: {
-                title: "",
-                description: "",
-                code: "",
-                expirationdate: "",
-                discount: 50,
-                max_use: -1,
-                status: 1
+            paypalAccount: {
+                email: "",
+                sandboxmode: 1,
+                transactionmethod: 0
             },
         };
     },
@@ -82,27 +76,20 @@ export default {
             this.anerror = {};
             Object.assign(this.anerror, this.initialErrors);
             const params = new URLSearchParams();
-            params.append('title', this.giftCardInfo.title);
-            params.append('code', this.giftCardInfo.code);
-            params.append('description', this.giftCardInfo.description);
-            params.append('expiration_date', this.giftCardInfo.expirationdate);
-            params.append('max_use', this.giftCardInfo.max_use);
-            params.append('status', this.giftCardInfo.status);
-            axios.post(this.paymentService + 'payments/giftcards/addGiftCard', params)
+            params.append('email', this.paypalAccount.email);
+            params.append('sandboxmode', this.paypalAccount.sandboxmode);
+            params.append('transactionmethod', this.paypalAccount.transactionmethod);
+            axios.post(this.paymentService + 'payments/paypalAdmin/addPaypal', params)
             .then(response => {
                 var theResponse = response.data;
                 if(theResponse.status == "inserted"){
-                    this.$router.push({ name: "GiftCards" });
+                    this.$router.push({ name: "Paypal" });
                 }
                 else if(theResponse.errors){
                     theResponse.errors.forEach((item)=>{
-                        if(item.source.pointer == "title"){
-                            this.anerror.violations.title = false;
-                            this.anerror.violations.titleViolations.push(item.detail);
-                        }
-                        if(item.source.pointer == "code"){
-                            this.anerror.violations.code = false;
-                            this.anerror.violations.codeViolations.push(item.detail);
+                        if(item.source.pointer == "email"){
+                            this.anerror.violations.email = false;
+                            this.anerror.violations.emailViolations.push(item.detail);
                         }
                     });
                 }
@@ -126,5 +113,5 @@ export default {
             });
         }
     }
-};
+}
 </script>

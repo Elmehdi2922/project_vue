@@ -17,6 +17,8 @@ Vue.use(BootstrapVueIcons);
 // Payment Service
 Vue.prototype.paymentService = "http://localhost/yassine/";
 
+// Other Services
+
 Vue.config.productionTip = false;
 
 new Vue({

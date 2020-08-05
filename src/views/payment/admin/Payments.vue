@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
         <div class="col text-left">
             <div class="wrapper">
                 <AdminSideBar />
                 <!-- Content -->
                 <div id="content">
-                    <h1><img alt="commerce" src="../assets/images/payment.png" /> Payments</h1>
+                    <h1><img alt="commerce" src="../../../assets/images/payment.png" /> Payments</h1>
                     <div class="alert alert-info text-left">
                         <b-icon icon="exclamation-circle-fill" variant="info" font-scale="1.5" style="vertical-align: middle" /> <b>Payment methods :</b> Manage differente payment methods.
                     </div>
@@ -23,7 +23,7 @@
                         <tbody>
                             <tr v-if="loading">
                                 <td colspan="5">
-                                    <img src="../assets/images/5.gif" style="width: 16px; height: 16px" />
+                                    <img src="../../../assets/images/5.gif" style="width: 16px; height: 16px" />
                                     Loading...
                                 </td>
                             </tr>
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import AdminSideBar from "@/components/AdminSideBar.vue";
+import AdminSideBar from "@/components/payment/admin/AdminSideBar.vue";
 import axios from "axios";
 export default {
   name: "Payments",

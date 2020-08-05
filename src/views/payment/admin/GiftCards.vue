@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
         <div class="col text-left">
             <div class="wrapper">
@@ -29,7 +29,7 @@
                         <tbody>
                             <tr v-if="loading">
                                 <td colspan="8">
-                                    <img src="../assets/images/5.gif" style="width: 16px; height: 16px" />
+                                    <img src="../../../assets/images/5.gif" style="width: 16px; height: 16px" />
                                     Loading...
                                 </td>
                             </tr>
@@ -82,7 +82,7 @@
 </template>
 <script>
 import axios from "axios";
-import AdminSideBar from "@/components/AdminSideBar.vue";
+import AdminSideBar from "@/components/payment/admin/AdminSideBar.vue";
 export default {
     name: "GiftCard",
     components: {

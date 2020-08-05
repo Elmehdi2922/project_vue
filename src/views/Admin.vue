@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
         <div class="col text-left">
             <div class="wrapper">
@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import AdminSideBar from "@/components/AdminSideBar.vue";
+import AdminSideBar from "@/components/payment/admin/AdminSideBar.vue";
 export default {
-  name: "Home",
+  name: "Admin",
   components: {
     AdminSideBar
   }
